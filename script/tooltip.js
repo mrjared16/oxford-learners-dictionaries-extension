@@ -87,8 +87,14 @@ Tooltip.prototype.initHTML = function () {
     this.html_element = document.createElement("div");
     this.html_element.id = this.html_id;
     // this.html_element.style.opacity = 0;
-
-    this.shadow_root.appendChild(this.html_element);
+    let old;
+    if ((old = this.shadow_root.getElementById(this.html_id))) {
+        this.shadow_root.replaceChild(this.html_element, old);
+    }
+    else {
+        this.shadow_root.appendChild(this.html_element);
+    }
+    
     this.parent_element.appendChild(this.wrapper);
     //this.initHeader();
 }
