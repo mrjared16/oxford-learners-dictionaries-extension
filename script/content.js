@@ -1,12 +1,15 @@
 function Content(word, content, pronunciation, stt) {
     if (!word || !content)
-        return;
+    {
+        console.log("cannot scrape word nor content");
+        //return;
+    }
     return {
         id: 0,
         word: word,
         content: content,
         pronunciation: pronunciation,
-        status: (stt) ? stt : "error"
+        status: (stt) ? stt : "error",
     };
 }
 
@@ -19,7 +22,7 @@ Content.templateError = function (header, msg) {
     content.className = Tooltip.class_name.error.content;
     content.innerHTML = `${msg}`;
 
-    return Content([word], [content], undefined, "error");
+    return Content([word], [content], null, "error", null);
 }
 
 Content.networdError = function (word) {
@@ -37,4 +40,9 @@ Content.outDate = function () {
 Content.fetchError = function(error) {
     return Content.templateError(`Extension error`, `This website has security policy problem with extension. Please report this bug (the word and site) and how to reproduce it to me. Thanks!`)
     //return Content.templateError(`Extension error`, `${error}`);
+}
+
+Content.reconstructTooltip = function(word, content, pronun)
+{
+    return Content(word, content, pronun, (pronun.length > 0) ? "success" : "default", null);
 }
