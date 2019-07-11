@@ -2,7 +2,7 @@ function Tooltip(parent) {
     this.html_id = "__tooltip-ex-oxford";
 
 
-    this.bars = ["Defination", "Image"];
+    this.bars = ["Definition", "Image"];
 
     this.parent_element = parent || document.body;
     this.wrapper = null
@@ -102,7 +102,13 @@ Tooltip.prototype.initHTML = function () {
 
 Tooltip.prototype.setTooltip = function (word_info) {
     if (word_info.status === "success") {
+        // wrap pronun
         this.wrapNode(Tooltip.class_name.pronunciation, word_info.pronunciation);
+        // wrap examples
+
+    }
+    else {
+        console.log(`${word_info.status}, not wrap anything`);
     }
 
     this.setNode(Tooltip.class_name.word, word_info.word);
