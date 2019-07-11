@@ -23,13 +23,17 @@ Content.templateError = function (header, msg) {
 }
 
 Content.networdError = function (word) {
-    return Content.templateError(`Error looking up the word "<strong>${word}</strong>"`, "Something went wrong. Please check your network and try again");
+    return Content.templateError(`Error looking up the word "<strong>${word}</strong>"`, "Something went wrong. Please check your network and try again.");
 }
 
 Content.notFound = function (word) {
-    return Content.templateError(`Error looking up the word "<strong>${word}</strong>"`, `Oh sorry, we do not found the word <strong>${word}</strong> in Oxford Learner's Dictionaries`);
+    return Content.templateError(`Error looking up the word "<strong>${word}</strong>"`, `Oh sorry, we do not found the word <strong>${word}</strong> in Oxford Learner's Dictionaries.`);
 }
 
 Content.outDate = function () {
-    return Content.templateError(`Your extension is outdated`, `Oxford Learner's Dictionaries have changed their website, please wait for the new extension`);
+    return Content.templateError(`Your current extension version is outdated`, `Oxford Learner's Dictionaries have changed their website, please wait for the new extension.`);
+}
+
+Content.fetchError = function() {
+    return Content.templateError(`Extension error`, `This website has security policy problem with extension. Please report this bug (the word and site) and how to reproduce it to me. Thanks!`)
 }

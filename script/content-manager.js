@@ -20,6 +20,8 @@ ContentManager.prototype._addListener = function () {
 ContentManager.prototype._onMouseUp = function (event) {
 
     this.selection = window.getSelection();
+    if (this.selection.rangeCount <= 0)
+        return;
     this.rect = this.selection.getRangeAt(0).getBoundingClientRect();
 
     if (!this.shouldRenderTooltip(event.target))
@@ -31,7 +33,9 @@ ContentManager.prototype._onMouseUp = function (event) {
         .then(res => {
             this.renderTooltip(res);
             //event.preventDefault();
-        });
+        })
+        .catch(() => this.handleFetchError());
+
 }
 
 ContentManager.prototype.shouldRenderTooltip = function (event) {
@@ -79,6 +83,12 @@ ContentManager.prototype.renderTooltip = function (response) {
         .then(res => new DOMScrapper(res))
         .then(scrapper => scrapper.getResponseForTooltip())
         .then(info => this.createToolTip(info));
+
+}
+
+ContentManager.prototype.handleFetchError = function()
+{
+    this.createToolTip(Content.fetchError());
 }
 
 ContentManager.prototype.createToolTip = function (data) {
