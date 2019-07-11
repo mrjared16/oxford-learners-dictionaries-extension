@@ -31,9 +31,10 @@ Content.notFound = function (word) {
 }
 
 Content.outDate = function () {
-    return Content.templateError(`Your current extension version is outdated`, `Oxford Learner's Dictionaries have changed their website, please wait for the new extension.`);
+    return Content.templateError(`Oops!`, `Oxford Learner's Dictionaries have changed their website. </br>Please report this bug and how to reproduce it. Thanks!`);
 }
 
-Content.fetchError = function() {
+Content.fetchError = function(error) {
     return Content.templateError(`Extension error`, `This website has security policy problem with extension. Please report this bug (the word and site) and how to reproduce it to me. Thanks!`)
+    //return Content.templateError(`Extension error`, `${error}`);
 }
