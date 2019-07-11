@@ -196,12 +196,13 @@ Tooltip.prototype.setNode = function (class_name, nodes) {
 Tooltip.prototype.wrapNode = function (class_name, nodes) {
     // save parent and anchor
     const parent = nodes[0].parentNode;
-    const anchor = nodes[nodes.length - 1].nextSibling;
+    //const anchor = nodes[nodes.length - 1].nextSibling;
+    const anchor = nodes[0].previousSibling;
 
     // wrap and remove from parent
     const div = this.wrap(class_name, nodes, false);
-    // insert before anchor
-    parent.insertBefore(div, anchor);
+    // insert after anchor
+    parent.insertBefore(div, anchor.nextSibling);
 }
 
 
