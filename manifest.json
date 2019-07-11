@@ -19,5 +19,8 @@
             ]
         }
     ],
-    "web_accessible_resources": ["style/*.css"]
+    "content_security_policy": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline';  connect-src https://www.oxfordlearnersdictionaries.com/;",
+    "web_accessible_resources": [
+        "style/*.css"
+    ]
 }
