@@ -1,0 +1,23 @@
+{
+    "name": "Oxford Learner's Dictionaries Extension",
+    "description": "Fast way to look up a word by popup a tooltip",
+    "manifest_version": 2,
+    "version": "0.1",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "script/content-manager.js",
+                "script/content.js",
+                "script/request.js",
+                "script/tooltip-listener.js",
+                "script/tooltip.js",
+                "script/dom-scrapper.js",
+                "script/inject.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": ["style/*.css"]
+}
