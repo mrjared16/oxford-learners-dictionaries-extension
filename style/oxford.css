@@ -1,0 +1,887 @@
+/*! CSS Used from: https://www.oxfordlearnersdictionaries.com/external/styles/interface.css?version=1.6.63 */
+*{
+    -webkit-box-sizing:border-box;
+    -moz-box-sizing:border-box;
+    -ms-box-sizing:border-box;
+    -o-box-sizing:border-box;
+    box-sizing:border-box;
+}
+    
+*, *:before,*:after{
+    -moz-box-sizing:border-box;
+    -webkit-box-sizing:border-box;
+    box-sizing:border-box;
+}
+
+div,span,h2, a, strong,
+ol, li, section {
+    margin:0;
+    border:0;
+    font:inherit;
+    font-size:100%;
+    vertical-align:baseline;
+}
+
+ol{
+    list-style:none;
+}
+
+ol{
+    list-style-type:decimal;
+    padding-left:20px;
+}
+
+ol li{
+    margin-bottom:12px;
+}
+
+ol li:last-child{
+    margin-bottom:0;
+}
+
+a{
+    text-decoration:none;
+    color:#004aac;
+    cursor:pointer;
+}
+a:hover{
+    text-decoration:underline;
+    cursor:pointer;
+}
+
+a:hover{
+    font-weight:normal;
+}
+
+h2{
+    font-size:31px;
+    line-height:42px;
+    margin:0;
+    color:#0d3880;
+}
+
+h2{
+    text-rendering:optimizeLegibility;
+}
+
+strong{
+    font-weight:bold;
+}
+/*
+classes
+*/
+
+
+/*
+.oup_icons{
+    vertical-align:text-bottom;
+    display:inline-block!important;
+    font-family:'oup-icons';
+    speak:none;
+    font-style:normal;
+    font-weight:normal;
+    font-variant:normal;
+    text-transform:none;
+    color:#777;
+    line-height:1;
+    font-size:16px;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+}
+*/
+
+/*.link-right{
+    margin-right:7px;
+    display:inline-block;
+    font-weight:normal;
+}
+.link-right:after{
+    position:relative;
+    top:1px;
+    display:inline-block;
+    content:"";
+    width:8px;
+    height:15px;
+    margin-left:5px;
+    background:url("https://www.oxfordlearnersdictionaries.com/external/images/documents/link-right.png") no-repeat center center;
+    background-size:100%;
+}*/
+/*! CSS Used from: https://www.oxfordlearnersdictionaries.com/external/styles/oxford.css?version=1.6.63 */
+
+.top-container{
+    background-color:#ecf5ff;
+    margin: 0 -14px 0 -14px;
+    padding: 0 14px 0 14px;
+    clear:both;
+}
+
+:not(.ocoll) .top-container .collapse, :not(.ocoll) .top-container .un{
+    background-color:rgba(69,119,191,0.1);
+    border-left:3px solid #4577bf;
+}
+
+:not(.ocoll) .top-container .collapse .heading:before{
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/wordlist/icon-plus-minus.png");
+}
+
+:not(.ocoll) .top-container .collapse .heading:hover,
+:not(.ocoll) .top-container .collapse .heading:active,
+:not(.ocoll) .top-container .unbox.is-active .heading,
+:not(.ocoll) .top-container .collapse .heading:focus{
+    background-color:rgba(69,119,191,0.2);
+}
+
+:not(.ocoll) .top-container .unbox.is-active .heading:before{
+    background-position:center -92px;
+}
+
+.top-g .pos-g, .pron-gs .wrap, li.sn-g>.num, 
+span[hide~="y"], .top-container br{
+    display:none;
+}
+
+.webtop-g{
+    background-color:#4577bf;
+    margin:0 -14px 4px -14px;
+    padding:7px 14px 4px 14px;
+    line-height:28px;
+}
+.webtop-g h2{
+    font-size:21px;
+    font-weight:bold;
+    font-family:'Open Sans', Arial, sans-serif;
+    padding:0;
+    color:white;
+    line-height:30px;
+    display:inline-block;
+}
+
+.oxford3000{
+    display:inline-block;
+    background-size:100%;
+    background-repeat:no-repeat;
+    width:30px;
+    height:30px;
+    margin:0 0 -8px;
+    position:relative;
+    top:-5px;
+}
+.oxford3000:hover{
+    text-decoration:none;
+}
+.oxford3000{
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/wordlist/icon-ox3000.png");
+}
+
+
+.top-g .sound, .ei-g .sound{
+    vertical-align:middle;
+    display:inline-block;
+    font-size:14px;
+}
+.top-g .pron-uk, .ei-g .pron-uk{
+    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-bre.png);
+    background-repeat:no-repeat;
+    background-position:left top!important;
+    background-size:100%;
+    width:24px;
+    height:24px;
+}
+.top-g .pron-uk:hover, .ei-g .pron-uk:hover{
+    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-bre.png);
+    background-repeat:no-repeat;
+    background-position:left bottom!important;
+}
+
+.top-g .pron-us, .ei-g .pron-us{
+    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-name.png);
+    background-repeat:no-repeat;
+    background-position:left top!important;
+    background-size:100%;
+    width:24px;
+    height:24px;
+}
+.top-g .pron-us:hover, .ei-g .pron-us:hover{
+    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-name.png);
+    background-repeat:no-repeat;
+    background-position:left bottom!important;
+}
+
+li.sn-g{
+    padding-left:40px;
+}
+
+.clear{
+    clear:both;
+    height:2px;
+}
+
+
+.pos, .reg{
+    font-family:"Open Sans",Arial,sans-serif;
+    font-style:italic;
+}
+.def, .gram, .li, li.sn-g:before,
+.ndv, .xr-g, .vp .prefix{
+    font-family:"Open Sans",Arial,sans-serif;
+    font-weight:normal;
+    font-style:normal;
+}
+.cf, .vp, .xh, .idm{
+    font-family:"Open Sans",Arial,sans-serif;
+    font-weight:bold;
+    font-style:normal;
+}
+.xr-gs .prefix{
+    font-family:"Open Sans",Arial,sans-serif;
+    font-variant:small-caps;
+}
+.cl{
+    font-family:"Merriweather",Georgia,serif;
+    font-weight:bold;
+    font-style:italic;
+}
+.x, .x-g{
+    font-family:"Merriweather",Georgia,serif;
+    font-style:italic;
+}
+.phon{
+    font-family:"Lucida Sans Unicode","Lucida Grande";
+}
+.un{
+    padding:12px 18px 12px 18px;
+    text-indent:0
+}
+
+.collapse, .un{
+    background-color:rgba(199,110,6,0.1);
+    display:block;
+    margin:12px 0 18px 0;
+    position:relative;
+}
+
+.collapse{
+    overflow: hidden;
+}
+/*for/however*/
+.top-g>.un{
+    max-height: 60px;
+    overflow: auto;
+}
+
+.collapse .heading{
+    padding:6px 12px 6px 12px;
+    margin:-12px -18px -12px -18px;
+    font-size:15.5px;
+}
+.collapse .heading:hover, .collapse .heading:active,
+.unbox.is-active .heading, .collapse .heading:focus{
+    background-color:rgba(199,110,6,0.2);
+}
+
+.bre, .name{
+    display:none;
+}
+.cf{
+    display:inline;
+}
+.def{
+    display:inline;
+}
+.gram-g{
+    color:#767676;
+}
+
+.pv-gs{
+    border:1px solid rgba(199,110,6,0.4);
+    border-radius:10px 10px 0 0;
+    display:block;
+    margin:18px 0 18px 0;
+    overflow:hidden;
+}
+.label-g{
+    color:#767676;
+    font-weight:normal;
+}
+li.sn-g:before{
+    color:#00123c;
+    padding-right:6px;
+    position:absolute;
+    text-align:right;
+    left:-8px;
+    width:24px;
+}
+#ox-enlarge{
+    float:right;
+    position:relative;
+    z-index:10;
+    clear:both
+}
+#ox-enlarge img{
+    margin-bottom:-7px
+}
+#ox-enlarge a.topic{
+    display:block;
+    text-align:right;
+    position:relative;
+    padding:2px;
+    margin:0 0 12px 12px;
+    background-color:#c0c0c0
+}
+#ox-enlarge a.topic:hover{
+    text-decoration:none;
+    background-color:#4577bf;
+    color:white
+}
+#ox-enlarge .ox-enlarge-label{
+    text-indent:50px;
+    overflow:hidden;
+    position:absolute;
+    width:24px;
+    height:24px;
+    bottom:0;
+    right:0;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/enlarge-img.png");
+    background-color:inherit;background-repeat:no-repeat;background-position:center;background-size:14px 14px
+}
+#ox-enlarge+.z{
+    display:none
+}
+
+.ndv{
+    color:#00837d;
+}
+.pron-g{
+    white-space:nowrap;
+}
+.pron-g[geo~=br] .prefix{
+    color:#07255e;
+}
+.pron-g[geo~=n_am] .prefix{
+    color:#8f0610;
+}
+.pron-gs{
+    display:inline;
+}
+.sn-g{
+    display:block;
+    position:relative;
+    margin-top:12px;
+}
+.sn-g[ox3000="y"] .oxford3000{
+    background-color:#4577bf;
+    border-radius:12px;
+    width:20px;
+    height:20px;
+    margin:0 6px 3px 0;
+    position:static;
+    vertical-align:middle;
+}
+.sn-gs, .res-g{
+    display:block;
+}
+.vp{
+    margin-right:12px;
+}
+.vp-g{
+    display:block;
+}
+.x-g{
+    display:block;
+    margin-top:6px;
+    position:relative;
+    margin-left:11px;
+}
+.x-g:before{
+    content:"";
+    left:-11px;
+    top:8px;
+    position:absolute;
+    width:6px;
+    height:6px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-size:6px auto;
+}
+.x-gs{
+    display:block;
+}
+.xr-gs{
+    display:block;
+    margin-top:6px;
+}
+
+.webtop-g .pos{
+    margin-left:6px;
+    color:#ffffff;
+}
+.webtop-g a:last-of-type{
+    margin-right:4px;
+}
+.top-g .clear{
+    margin-top:6px;
+}
+.top-g>.pron-gs{
+    display:block;
+}
+.x-g .cf{
+    margin-right:6px;
+}
+.xr-gs:before{
+    content:"";
+    margin-right:4px;
+    position:relative;
+    top:-1px;
+    width:13px;
+    height:9px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-arrow.png");
+    background-size:13px auto;
+    display:inline-block;
+}
+.pv-gs>.xr-gs{
+    margin:12px 0 12px 0;
+}
+.pv-gs>.xr-gs{
+    margin-top:0;
+}
+.pv-gs>.xr-gs:before{
+    display:none;
+}
+.pv-gs .xr-gs>.heading{
+    margin-bottom:6px;
+    display:block;
+    font-size:18px;
+    padding:12px 18px 0 18px;
+    color:#C76E06;
+}
+.pv-gs>.xr-gs .Ref{
+    display:block;
+    margin:6px 18px;
+}
+
+.collapse[title^="Grammar"] .p{
+    margin-top:3px;
+    margin-left:16px;
+    position:relative;
+    display:block
+}
+.collapse[title^="Grammar"] .p:before{
+    content:"";
+    position:absolute;
+    left:-15px;
+    top:9px;
+    width:7px;
+    height:7px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-sqbullet.png");
+    background-size:7px auto
+}
+.collapse{
+    padding:12px 18px 12px 18px;
+    border-left:3px solid #C76E06;
+}
+.collapse .heading, .collapse .body, 
+.collapse .h1, .collapse .li, .collapse .inline{
+    display:block;
+}
+.collapse .heading:hover{
+    cursor:pointer;
+}
+.collapse .heading:before{
+    width:14px;
+    height:14px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/icon-plus-minus-orange.png");
+    background-size:100% auto;
+    background-position:center bottom;
+    content:"";
+    display:inline-block;
+    margin-right:12px;
+    position:relative;
+    top:1px;
+}
+
+.collapse .body,  .collapse .heading+.def{
+    display:none;
+}
+.collapse .h1{
+    color:#C76E06;
+    font-size:19.5px;
+    margin:12px 0 6px 0;
+    font-weight:bold;
+    display:block;
+}
+.collapse .h2, .collapse .h3{
+    font-size:16.5px;
+    margin:6px 0 3px 0;
+    font-weight:bold;
+    display:block;
+    border-bottom:1px solid rgba(199,110,6,0.5);
+    color:#333;
+}
+
+.collapse .li .x-gs{
+    display:inline
+}
+.collapse .x-gs{
+    margin-bottom:6px
+}
+.collapse .x-g{
+    display:inline;
+    margin-left:4px;
+    position:static
+}
+.collapse .x-g:before{
+    display:none
+}
+.collapse .x-g:not(:first-of-type):before{
+    content:"";
+    left:-3px;
+    margin-left:-2px;
+    margin-right:1px;
+    position:relative;
+    display:inline-block;
+    top:-2px;
+    width:6px;
+    height:6px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-size:6px auto
+}
+
+.collapse .p{
+    margin:0;
+    display:block;
+}
+.collapse .p .xr-gs{
+    display:inline;
+    margin:0;
+}
+.collapse .p .xr-gs[type~="pdf"]{
+    display:none;
+}
+.collapse .inline{
+    display:block;
+    font-size:16.5px;
+    margin-bottom:12px;
+}
+.collapse .inline .li{
+    display:inline-block;
+    font-weight:bold;
+}
+.collapse .inline .li:not(:last-of-type):after{
+    content:"";
+    margin-left:5px;
+    position:relative;
+    top:-2px;
+    width:6px;
+    height:6px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-size:6px auto;
+    display:inline-block;
+}
+.bold, .eb, .title_bold{
+    font-weight:bold
+}
+.collapse .deflist .li, .collapse ul.deflist .li{
+    margin-top:6px
+}
+.collapse .deflist .li>.eb,.collapse ul.deflist .li>.eb{
+    color:#C76E06;
+    font-size:16px
+}
+.collapse .bullet,.collapse ul.bullet{
+    display:block;
+    margin:6px 0 12px 0
+}
+.collapse .bullet .li,.collapse ul.bullet .li{
+    margin-top:3px;
+    margin-left:16px;
+    position:relative;
+    display:block
+}
+.collapse .bullet .li:before,.collapse ul.bullet .li:before{
+    content:"";
+    position:absolute;
+    left:-15px;
+    top:9px;
+    width:7px;
+    height:7px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-sqbullet.png");
+    background-size:7px auto
+}
+.collapse .table{
+    margin:12px;
+    display:table
+}
+.collapse .th,.collapse .td{
+    padding:2px 12px 2px 12px;
+    border-bottom:1px solid rgba(199,110,6,0.5);
+    display:table-cell
+}
+.collapse .th{
+    background-color:rgba(199,110,6,0.2)
+}
+.collapse .tr{
+    display:table-row
+}
+.collapse[title^="Extra"] .x-g{
+    display:block;
+    position:relative
+}
+.collapse[title^="Extra"] .x-g:before{
+    content:"";
+    display:inline;
+    left:-11px;
+    margin:0;
+    position:absolute;
+    width:6px;
+    height:6px;
+    top:8px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-size:6px auto
+}
+.collapse[title^="Wordfinder"] .xr-gs:before{
+    display:none
+}
+.collapse[title^="More Like This"] .inline .li{
+    font-weight:normal;
+    font-size:15px
+}
+.collapse[title^="More Like This"] .sep{
+    display:none
+}
+.collapse[title^="AWL Collocations"] .er{
+    font-weight:normal
+}
+.collapse[title^="AWL Collocations"] .h3{
+    border-bottom:0
+}
+.collapse[title^="AWL Collocations"] .h3 .inline{
+    margin-bottom:0;
+    font-size:15px
+}
+
+
+.shcut{
+    font-size:16.5px;
+    display:block;
+    margin-top:18px;
+    border-bottom:1px solid rgba(199,110,6,0.5)
+}
+
+.snippet .collapse{
+    border-left-color:#A9222D;
+    background-color:transparent;
+}
+.snippet .collapse .shcut{
+    border-bottom:none;
+}
+.snippet .collapse .heading{
+    background-color:rgba(169,34,45,0.1);
+}
+.snippet .collapse .heading:hover{
+    background-color:rgba(169,34,45,0.2);
+}
+.snippet .collapse .heading:before{
+    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/entry/icon-plus-minus-red.png);
+}
+.snippet .collapse .shcut.shcut{
+    margin-top:12px;
+}
+.snippet .collapse .coll-g:before{
+    content:"\2022";
+    font-size:20px;
+    padding-top:2px;
+    margin-right:6px;
+    display:inline-block;
+    position:relative;
+    top:2px;
+    line-height:18px;
+    color:silver;
+}
+.snippet .collapse .coll-gs .sep{
+    display:none;
+}
+.shcut-red, .snippet .collapse .shcut,
+.collapse[title="Collocations"] .shcut,
+.collapse[title="All Collocations"] .shcut{
+    text-transform:uppercase;
+    font-weight:bold;
+    border-bottom:none;
+    margin-top:30px;
+    color:#A9222D;
+}
+
+.collapse[title="Collocations"] .shcut,.collapse[title="All Collocations"] .shcut{
+    color:#333;
+    margin-top:12px
+}
+.collapse[title="Collocations"] .sn-g,.collapse[title="All Collocations"] .sn-g{
+    margin-top:0
+}
+.collapse[title="Collocations"] .colsep,.collapse[title="All Collocations"] .colsep{
+    color:silver
+}
+.collapse[title="Collocations"] .x-g,.collapse[title="All Collocations"] .x-g{
+    display:block
+}
+.collapse[title="Collocations"] .x-g:first-of-type:before,.collapse[title="All Collocations"] .x-g:first-of-type:before{
+    content:"";
+    left:-3px;
+    margin-left:-2px;
+    margin-right:1px;
+    position:relative;
+    display:inline-block;
+    top:-2px;
+    width:6px;
+    height:6px;
+    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-size:6px auto
+}
+.unbox.is-active .heading{
+    margin-bottom:12px;
+}
+.unbox.is-active .heading:hover{
+    cursor:pointer;
+}
+.unbox.is-active .heading:before{
+    background-position:center top;
+}
+.unbox.is-active .body{
+    display:block;
+}
+
+.xh{
+    font-variant:small-caps;
+}
+.unbox .p{
+    display:block;
+}
+.prefix+.Ref{
+    display:inline;
+    margin:0;
+}
+.pv-gs{
+    overflow:visible;
+}
+/*! CSS Used from: https://www.oxfordlearnersdictionaries.com/external/styles/mywordlist.css?version=1.6.63 */
+/*.sn-g .oup_icons{
+    width:20px;
+    height:20px;
+    line-height:20px;
+    color:#9E9E9E;
+    border-left:none;
+    border-radius:50%;
+    vertical-align:middle;
+    margin-right:3px;
+}
+ol .sn-g .oup_icons.open{
+    position:static;
+    font-size:1.25em;
+    height:20px;
+}
+.sn-g .oup_icons:hover{
+    text-decoration:none;
+    color:#333333;
+}
+.sn-g .oup_icons:active{
+    text-decoration:none;
+    color:#333333;
+}
+*/
+.star-btn:before{
+    content:"\e60e";
+}
+.clear{
+    margin:0;
+    clear:both;
+}
+.star-btn{
+    color:#4577bf;
+    border:none;
+    height:24px;
+    padding:1px;
+}
+.star-btn:hover{
+    color:#002147;
+}
+.star-btn:focus{
+    color:#002147;
+}
+/*! CSS Used from: https://www.oxfordlearnersdictionaries.com/external/styles/responsive.css?version=1.6.63 */
+.responsive_display_inline_on_smartphone{
+    display:none!important;
+}
+
+div.contentslot{
+    margin:1em 0 0 2em;
+    text-align:center;
+}
+
+.idm{
+    font-size:16px;
+}
+.idm-g{
+    margin:12px 18px 18px 18px;
+    display:block;
+}
+.idm-gs{
+    border:1px solid rgba(199,110,6,0.4);
+    border-radius:10px 10px 0 0;
+    display:block;
+    margin:18px 0 18px 0;
+    overflow:hidden;
+}
+ol.idm-g{
+    list-style-type:none;
+    padding-left:0;
+    counter-reset:num;
+}
+.idm-gs>.heading{
+    display:block;
+    font-size:18px;
+    padding:12px 18px 0 18px;
+    color:#C76E06;
+}
+.idm-g .top-container{
+    padding:0;
+    margin:0 0 -6px 0;
+    background-color:transparent;
+}
+.idm-g .top-container .clear, .idm-g .top-container br{
+    display:none;
+}
+.idm-g .v-gs{
+    display:block;
+}
+.idm-g .idm+.label-g{
+    margin-left:6px;
+}
+.idm-gs{
+    overflow:visible;
+}
+
+/*
+@media screen and (max-width: 360px){
+    div.contentslot{margin-left:-1.7em;
+        text-align:center;
+    }
+}
+@media screen and (min-width: 261px) and (max-width: 761px){
+    div.contentslot{margin-left:-43px;
+        text-align:center;
+    }
+}
+@media screen and (min-width: 762px) and (max-width: 928px){
+    div.contentslot{
+        margin-left:-30px;
+        text-align:center;
+    }
+    .responsive_display_inline_on_smartphone{
+        display:none!important;
+    }
+}
+@media screen and (min-width: 1220px){
+    .responsive_display_inline_on_smartphone{
+        display:none!important;
+    }
+}
+*/
+
