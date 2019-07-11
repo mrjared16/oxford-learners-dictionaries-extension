@@ -17,20 +17,26 @@ DOMScrapper.prototype.addListenerToDOM = function () {
 }
 
 DOMScrapper.prototype.getResponseForTooltip = function () {
-    const word_info = Array.from(this.getWordContent());
+    const main_content = this.getMainContent();
+    if (!main_content)
+        return;
+
+    const word_info = Array.from(main_content.childNodes);
     const pronun = Array.from(this.getPronunciation());
-    while (pronun.length > 0 && pronun[pronun.length - 1].parentNode != pronun[0].parentNode) {
+
+    while (pronun && pronun.length > 0 && pronun[pronun.length - 1].parentNode != pronun[0].parentNode) {
         pronun.pop();
     }
 
-    if (this.isResponseError(word_info, pronun))
+    if (this.isResponseError(word_info)) {
         return Content.outDate();
-
-    return Content([word_info[0]], word_info.slice(1), pronun, "success");
+    }
+    
+    return Content.reconstructTooltip([word_info[0]], word_info.slice(1), pronun);
 }
 
-DOMScrapper.prototype.isResponseError = function (word_info, pronun) {
-    return (!word_info || !pronun || pronun.length < 1 || word_info.length < 2 || !this.isWordContainer(word_info[0]));
+DOMScrapper.prototype.isResponseError = function (word_info) {
+    return (!word_info || word_info.length < 2 || !this.isWordContainer(word_info[0]));
 }
 
 DOMScrapper.prototype.getSoundButtons = function () {
@@ -41,8 +47,8 @@ DOMScrapper.prototype.getCollapseButtons = function () {
     return this.html.querySelectorAll(".unbox .heading");
 }
 
-DOMScrapper.prototype.getWordContent = function () {
-    return this.html.querySelector("div.entry > .h-g").childNodes;
+DOMScrapper.prototype.getMainContent = function () {
+    return this.html.querySelector("div.entry > .h-g");
 }
 
 DOMScrapper.prototype.getPronunciation = function () {
