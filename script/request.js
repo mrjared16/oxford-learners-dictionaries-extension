@@ -1,14 +1,14 @@
 function Request(word) {
-    this.url = `https://www.oxfordlearnersdictionaries.com/definition/english/${word}`;
-    this.word = word;
+    this.query = this.getNormalize(word);
+    this.url = `https://www.oxfordlearnersdictionaries.com/definition/english/${this.query}`;
     return this;
 }
 
 Request.prototype.sendRequest = function () {
-    return window.fetch(this.url)
+    return window.fetch(this.url);
 }
-Request.prototype.normalizeURL = function()
+Request.prototype.normalizeURL = function(word)
 {
-    word.replace(" ", "%20");
+    return word.replace(" ", "-");
 }
 
