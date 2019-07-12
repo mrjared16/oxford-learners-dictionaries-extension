@@ -1,4 +1,4 @@
-function Tooltip(parent) {
+function Tooltip(content_manager, parent) {
     this.html_id = "__tooltip-ex-oxford";
 
 
@@ -9,6 +9,8 @@ function Tooltip(parent) {
     this.shadow_root = null;
     this.html_element = null;
     this.index = 0;
+
+    this.content_manager = content_manager;
 
     this.init();
     return this;
@@ -94,7 +96,7 @@ Tooltip.prototype.initHTML = function () {
     else {
         this.shadow_root.appendChild(this.html_element);
     }
-    
+
     this.parent_element.appendChild(this.wrapper);
     //this.initHeader();
 }
@@ -103,9 +105,15 @@ Tooltip.prototype.initHTML = function () {
 Tooltip.prototype.setTooltip = function (word_info) {
     if (word_info.status === "success") {
         // wrap pronun
-        this.wrapNode(Tooltip.class_name.pronunciation, word_info.pronunciation);
+        if (word_info.pronunciation) {
+            this.wrapNode(Tooltip.class_name.pronunciation, word_info.pronunciation);
+        }
         // wrap examples
 
+        //add other results
+        if (word_info.other) {
+            this.addOtherDefinition(word_info.other);
+        }
     }
     else {
         console.log(`${word_info.status}, not wrap anything`);
@@ -158,7 +166,6 @@ Tooltip.prototype.getAbsolutePosition = function (selection) {
     let x_offset = window.pageXOffset;
     let y_offset = window.pageYOffset;
 
-    //console.log(tooltip.height + tooltip.indent, selection.top);
     const isTop = (selection.top + tooltip.indent > window.innerHeight / 2 && tooltip.height + tooltip.indent < selection.top);
     if (isTop) {
         y_offset -= tooltip.height + tooltip.indent;
@@ -255,4 +262,24 @@ Tooltip.prototype.wrap = function (class_names, nodes, isClone) {
 
 Tooltip.prototype.isInside = function (selection) {
     return (this.wrapper && this.wrapper === selection);
+}
+
+Tooltip.prototype.addOtherDefinition = function (defs) {
+    let getPosNode = (def) => {
+        let result = document.createElement("span");
+        result.className = "pos";
+        result.innerText = def.class;
+        result.addEventListener("click", () => {
+            this.deleteFromDOM();
+            this.content_manager.handleRequest(def.path);
+        });
+        return result;
+    }
+
+    if (!defs || defs.length == 0 || !defs[0].anchor) {
+        return;
+    }
+    defs.forEach(element => {
+        element.anchor.appendChild(getPosNode(element));
+    });
 }

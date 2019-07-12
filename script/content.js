@@ -1,4 +1,4 @@
-function Content(word, content, pronunciation, stt) {
+function Content(word, content, pronunciation, stt, defs) {
     if (!word || !content)
     {
         console.log("cannot scrape word nor content");
@@ -9,6 +9,7 @@ function Content(word, content, pronunciation, stt) {
         word: word,
         content: content,
         pronunciation: pronunciation,
+        other: defs,
         status: (stt) ? stt : "error",
     };
 }
@@ -42,7 +43,7 @@ Content.fetchError = function(error) {
     //return Content.templateError(`Extension error`, `${error}`);
 }
 
-Content.reconstructTooltip = function(word, content, pronun)
+Content.reconstructTooltip = function(word, content, pronun, defs)
 {
-    return Content(word, content, pronun, (pronun.length > 0) ? "success" : "default", null);
+    return Content(word, content, pronun, (pronun.length > 0) ? "success" : "default", defs);
 }

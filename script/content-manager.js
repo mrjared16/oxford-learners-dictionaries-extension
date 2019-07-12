@@ -7,7 +7,7 @@ function ContentManager(place_holder) {
     this.selection = null;
     this.rect = null;
 
-    this.tooltip = new Tooltip();
+    this.tooltip = new Tooltip(this);
 
     this._addListener();
     return this;
@@ -22,11 +22,11 @@ ContentManager.prototype._onMouseUp = function (event) {
     this.selection = window.getSelection();
     if (this.selection.rangeCount <= 0)
         return;
-    this.rect = this.selection.getRangeAt(0).getBoundingClientRect();
 
     if (!this.shouldRenderTooltip(event.target))
         return;
 
+    this.rect = this.selection.getRangeAt(0).getBoundingClientRect();
 
     this.initTooltip();
     this.handleRequest(this.word);
@@ -40,9 +40,12 @@ ContentManager.prototype.handleRequest = function (word) {
             //event.preventDefault();
         })
         .catch(error => {
+            const isFirstTime = () => word.indexOf("_") == -1;
+            const tryNext = (_word) => _word + "_1";
+
             // workaround
-            if (this.word === word) {
-                this.handleRequest(word + "_1");
+            if (isFirstTime()) {
+                this.handleRequest(tryNext(word));
             }
             else {
                 this.handleFetchError(this.word);

@@ -31,8 +31,14 @@ DOMScrapper.prototype.getResponseForTooltip = function () {
     if (this.isResponseError(word_info)) {
         return Content.outDate();
     }
-    
-    return Content.reconstructTooltip([word_info[0]], word_info.slice(1), pronun);
+
+    const defs = this.getOtherDefinition();
+    let def_object = null;
+    if (defs.length > 0) {
+        def_object = this.getOtherDefinitonObject(defs);
+    }
+
+    return Content.reconstructTooltip([word_info[0]], word_info.slice(1), pronun, def_object);
 }
 
 DOMScrapper.prototype.isResponseError = function (word_info) {
@@ -57,4 +63,38 @@ DOMScrapper.prototype.getPronunciation = function () {
 
 DOMScrapper.prototype.isWordContainer = function (node) {
     return node.classList.contains("top-container");
+}
+
+DOMScrapper.prototype.getOtherDefinition = function () {
+    return Array.from(this.html.querySelectorAll('.arl1'));
+
+}
+
+DOMScrapper.prototype.getOtherDefinitonObject = function (defs) {
+    let getAnchor = () => {
+        return this.html.querySelector(".webtop-g");
+    }
+    const _anchor = getAnchor();
+
+
+    let getClass = (def) => {
+        return def.getElementsByTagName('pos')[0].innerText;
+    }
+    let getWordPath = (def) => {
+        let paths = (def.parentNode.href).split('/');
+        return paths[paths.length - 1];
+    }
+    let templateObject = (clss, pth) => {
+        return {
+            class: clss,
+            path: pth,
+            anchor: _anchor
+        }
+    }
+
+    let result = [];
+    defs.forEach(def => {
+        result.push(templateObject(getClass(def), getWordPath(def)));
+    });
+    return result;
 }
