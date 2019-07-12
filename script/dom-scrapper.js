@@ -32,7 +32,7 @@ DOMScrapper.prototype.getResponseForTooltip = function () {
         return Content.outDate();
     }
 
-    const defs = this.getOtherDefinition();
+    const defs = Array.from(this.getOtherDefinition());
     let def_object = null;
     if (defs.length > 0) {
         def_object = this.getOtherDefinitonObject(defs);
@@ -66,7 +66,7 @@ DOMScrapper.prototype.isWordContainer = function (node) {
 }
 
 DOMScrapper.prototype.getOtherDefinition = function () {
-    return Array.from(this.html.querySelectorAll('.arl1'));
+    return this.html.querySelectorAll('.arl1');
 
 }
 
