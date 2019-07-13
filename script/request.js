@@ -1,5 +1,5 @@
 function Request(word) {
-    this.query = this.getNormalize(word);
+    this.query = this.getEncodeWord(word);
     this.url = `https://www.oxfordlearnersdictionaries.com/definition/english/${this.query}`;
     return this;
 }
@@ -7,7 +7,7 @@ function Request(word) {
 Request.prototype.sendRequest = function () {
     return window.fetch(this.url);
 }
-Request.prototype.normalizeURL = function(word)
+Request.prototype.getEncodeWord = function(word)
 {
     return word.replace(" ", "-");
 }

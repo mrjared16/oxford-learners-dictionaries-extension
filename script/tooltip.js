@@ -265,10 +265,10 @@ Tooltip.prototype.isInside = function (selection) {
 }
 
 Tooltip.prototype.addOtherDefinition = function (defs) {
-    let getPosNode = (def) => {
+    const getPosNode = (def) => {
         let result = document.createElement("span");
-        result.className = "pos";
-        result.innerText = def.class;
+        result.className = "pos tooltip-button";
+        result.innerHTML = `\n${def.class}\n`;
         result.addEventListener("click", () => {
             this.deleteFromDOM();
             this.content_manager.handleRequest(def.path);
