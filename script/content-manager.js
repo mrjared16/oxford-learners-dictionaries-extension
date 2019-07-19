@@ -65,19 +65,23 @@ ContentManager.prototype.shouldRenderTooltip = function (event) {
 }
 
 ContentManager.prototype.wordProcessing = function (text) {
+    // check number
+    if (/\d/.test(text))
+        return "";
+
     // remove double spaces
     let result = text.trim().replace(/\s+\s/g, " ");
 
     // remove symbols
-    var e = new RegExp("([=+?!@#$%⁄^&{_}():;\\|<>.,]|[\n])", "g");
+    let e = new RegExp("([=+?!@#$%⁄^&{_}():;\\|<>.,]|[\n])", "g");
     result = (result.replace(e, "")).replace("’", "'");
 
-    // validate 
-    const words = result.split(" ").length;
-    if (words > this.max_words && result.length > this.max_length)
-        return "";
+    return this.checkWordOption(result) ? result.toLowerCase() : "";
+}
 
-    return result.toLowerCase();
+ContentManager.prototype.checkWordOption = function (word) {
+    const words = result.split(" ").length;
+    return (words <= this.max_words && result.length <= this.max_length);
 }
 
 ContentManager.prototype.renderTooltip = function (response) {
