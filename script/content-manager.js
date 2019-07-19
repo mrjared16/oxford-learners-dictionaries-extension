@@ -1,22 +1,23 @@
 function ContentManager(place_holder) {
     this.place_holder = place_holder;
-
-    this.max_length = 20;
-    this.max_words = 1;
-
     this.selection = null;
     this.rect = null;
-
     this.tooltip = new Tooltip(this);
-
-    this._addListener();
+    this.getSetting();
+    this.addListener();
     return this;
 }
 
-ContentManager.prototype._addListener = function () {
+ContentManager.prototype.getSetting = function () {
+    this.max_length = 20;
+    this.max_words = 1;
+}
+
+ContentManager.prototype.addListener = function () {
     this.place_holder.addEventListener("mouseup", this._onMouseUp.bind(this));
 }
 
+// fetch select word
 ContentManager.prototype._onMouseUp = function (event) {
 
     this.selection = window.getSelection();
@@ -29,41 +30,24 @@ ContentManager.prototype._onMouseUp = function (event) {
     this.rect = this.selection.getRangeAt(0).getBoundingClientRect();
 
     this.initTooltip();
-    this.handleRequest(this.word);
+    this._fetch(this.word);
 }
 
-ContentManager.prototype.handleRequest = function (word) {
-    (new Request(word)).sendRequest()
-        .then(res => {
-            if (!this.tooltip.html_element)
-                this.renderTooltip(res);
-            //event.preventDefault();
-        })
-        .catch(error => {
-            const isFirstTime = () => word.indexOf("_") == -1;
-            const tryNext = (_word) => _word + "_1";
-
-            // workaround
-            if (isFirstTime()) {
-                this.handleRequest(tryNext(word));
-            }
-            else {
-                this.handleFetchError(this.word);
-            }
-        });
-}
-
+// not render if selection is inside tooltip or not a word
 ContentManager.prototype.shouldRenderTooltip = function (event) {
     if (this.tooltip.isInside(event)) {
-        //console.log("inside");
         return false;
     }
+
+    // remove when click outside
     this.tooltip.deleteFromDOM();
+
     this.word = this.wordProcessing(this.selection.toString());
 
     return (this.word && this.word != "");
 }
 
+// clear symbols, double spaces, check if contains number or not meet the options
 ContentManager.prototype.wordProcessing = function (text) {
     // check number
     if (/\d/.test(text))
@@ -79,12 +63,35 @@ ContentManager.prototype.wordProcessing = function (text) {
     return this.checkWordOption(result) ? result.toLowerCase() : "";
 }
 
+// check number of word and length of word
 ContentManager.prototype.checkWordOption = function (word) {
-    const words = result.split(" ").length;
-    return (words <= this.max_words && result.length <= this.max_length);
+    const number = word.split(" ").length;
+    return (number <= this.max_words && word.length <= this.max_length);
 }
 
-ContentManager.prototype.renderTooltip = function (response) {
+// fetch and forward response to this.handleResponse
+ContentManager.prototype._fetch = function (word) {
+    (new Request(word)).sendRequest()
+        .then(res => {
+            if (!this.tooltip.html_element)
+                this.handleResponse(res);
+        })
+        .catch(error => {
+            // workaround: word direct to word_1
+            const isFirstTime = () => word.indexOf("_") == -1;
+            const tryAgain = () => this._fetch(word + '_1');
+
+            if (isFirstTime()) {
+                tryAgain();
+            }
+            else {
+                this.renderToolTip(Content.fetchError());
+            }
+        });
+}
+
+// handle 404 or netword error, scrape if success
+ContentManager.prototype.handleResponse = function (response) {
 
     let word_info;
     if (response.status === 404) {
@@ -94,22 +101,18 @@ ContentManager.prototype.renderTooltip = function (response) {
         word_info = Content.networdError(this.word);
     }
     if (word_info) {
-        this.createToolTip(word_info);
+        this.renderTooltip(word_info);
         return;
     }
 
     response.text()
         .then(res => new DOMScrapper(res))
         .then(scrapper => scrapper.getResponseForTooltip())
-        .then(info => this.createToolTip(info));
+        .then(info => this.renderTooltip(info));
 
 }
 
-ContentManager.prototype.handleFetchError = function (error) {
-    this.createToolTip(Content.fetchError(error));
-}
-
-ContentManager.prototype.createToolTip = function (data) {
+ContentManager.prototype.renderToolTip = function (data) {
     this.tooltip.renderTooltip(data, this.rect);
 }
 
