@@ -71,13 +71,11 @@ DOMScrapper.prototype.getContent = function (word) {
 DOMScrapper.prototype.getPronunciation = function () {
     const scrapePronunciation = () => this.html.querySelectorAll(".top-g>.pron-gs, .top-g>.collapse");
     const pronunciation = Array.from(scrapePronunciation());
-    if (!pronunciation.hasOwnProperty('length'))
-        return null;
-
     while (pronunciation.length > 0 && pronunciation[pronunciation.length - 1].parentNode != pronunciation[0].parentNode) {
         pronunciation.pop();
     }
-
+    if (!pronunciation.length)
+        return null;
     return this.getObjectTemplate(pronunciation, pronunciation[0].parentNode, pronunciation[0].previousSibling);
 }
 
@@ -85,16 +83,22 @@ DOMScrapper.prototype.getWordType = function () {
     const scrapeWordType = () => this.html.querySelectorAll('.arl1');
 
     let types = Array.from(scrapeWordType());
-    if (!types.hasOwnProperty('length') || !types.length)
+    if (!types.length)
         return null;
 
     // word type
     const getClass = (type) => {
-        return type.getElementsByTagName('pos')[0].innerText;
+        const pos = type.getElementsByTagName('pos');
+        if (!pos || !pos[0]){
+            return null;
+        }
+        return pos[0].innerText;
     }
 
     // path of url
     const getPath = (type) => {
+        if (!type.parentNode)
+            return null;
         let paths = (type.parentNode.href).split('/');
         return paths[paths.length - 1];
     }
@@ -103,10 +107,24 @@ DOMScrapper.prototype.getWordType = function () {
         return this.html.querySelector(".webtop-g");
     }
 
-    types = types.map(type => ({
-        class: getClass(type),
-        path: getPath(type)
-    }));
+    types = types.reduce((prev, type) => {
+        if (!type){
+            return prev;
+        }
+        const clss = getClass(type);
+        const path = getPath(type);
+
+        if (!clss || !path){
+            console.log('class:', clss, 'path:', path);
+            return prev;
+        }
+        prev.push({
+            class: clss,
+            path
+        });
+        return prev;
+    }, []);
+
     return this.getObjectTemplate(types, getParent());
 }
 

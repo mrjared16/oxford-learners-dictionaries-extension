@@ -41,6 +41,8 @@ Content.fetchError = function () {
 }
 
 Content.reconstructTooltip = function (word, content, pronunciation, type, example) {
-    const status = (pronunciation) ? "success" : "default";
+    //const status = (pronunciation) ? "success" : "default";
+
+    const status = "success";
     return Content(status, word, content, pronunciation, type, example);
 }
