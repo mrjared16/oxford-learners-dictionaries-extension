@@ -37,6 +37,17 @@ Tooltip.class_name = {
     error: {
         word: "__tooltip-word-error",
         content: "__tooltip-content-error"
+    },
+    class: {
+        button: "class-button"
+    },
+    example: {
+        wrapper: "tooltip-example",
+        button: {
+            wrapper: "button-wrapper",
+            button: "example-button"
+        },
+        example: "example-wrapper"
     }
 }
 
@@ -101,18 +112,23 @@ Tooltip.prototype.initHTML = function () {
     //this.initHeader();
 }
 
-
 Tooltip.prototype.setTooltip = function (word_info) {
+    //console.log(word_info);
+
     if (word_info.status === "success") {
         // wrap pronun
         if (word_info.pronunciation) {
-            this.wrapNode(Tooltip.class_name.pronunciation, word_info.pronunciation);
+            this.wrapPronunciation(word_info.pronunciation);
         }
-        // wrap examples
 
-        //add other results
+        //add other word type
         if (word_info.other) {
-            this.addOtherDefinition(word_info.other);
+            this.addClassButtons(word_info.other);
+        }
+
+        // wrap examples
+        if (word_info.example) {
+            this.addExampleButtons(word_info.example);
         }
     }
     else {
@@ -121,6 +137,109 @@ Tooltip.prototype.setTooltip = function (word_info) {
 
     this.setNode(Tooltip.class_name.word, word_info.word);
     this.setNode(Tooltip.class_name.content, word_info.content);
+}
+
+Tooltip.prototype.wrapPronunciation = function (pronun) {
+    this.wrapNode(Tooltip.class_name.pronunciation, [pronun]);
+}
+
+Tooltip.prototype.addClassButtons = function (types) {
+    const { parent, anchor } = types;
+    if (!parent || !types || 
+        !types.element || !types.element.hasOwnProperty('length') || !types.element.length) {
+        return;
+    }
+
+    const getButton = (type) => {
+        const button = document.createElement('button');
+
+        button.className = Tooltip.class_name.class.button;
+        button.innerHTML = `${type.class}`;
+
+        button.addEventListener("click", () => {
+            this.deleteFromDOM();
+            this.content_manager.createTooltip(type.path);
+        });
+        return button;
+    }
+
+    const getPosNode = (type) => {
+        const result = document.createElement("span");
+        result.className = "pos";
+        result.appendChild(getButton(type));
+        return result;
+    }
+    types.element.forEach(element => {
+        //element.anchor.appendChild(getPosNode(element));
+        const div = getPosNode(element);
+        if (anchor) {
+            // insert after anchor
+            parent.insertBefore(div, anchor.nextSibling);
+        }
+        else {
+            parent.appendChild(div);
+        }
+    });
+}
+
+Tooltip.prototype.addExampleButtons = function (examples) {
+    if (!examples || !examples.length) {
+        return;
+    }
+
+    const buttonListener = parent => {
+        const button = parent.childNodes[0].childNodes[0];
+        button.classList.toggle('active');
+        const dropdown = parent.childNodes[1];
+        dropdown.classList.toggle('active');
+
+        button.innerHTML = (button.classList.contains('active')) ? 'Hide examples' : 'Show examples';
+    }
+
+    const createWrapper = (class_name) => {
+        const div = document.createElement('div');
+        div.className = class_name;
+
+        return div;
+    }
+
+    const createButton = (parent) => {
+        const button = document.createElement('button');
+        button.addEventListener('click', () => buttonListener(parent));
+        button.className = Tooltip.class_name.example.button.button;
+        button.innerHTML = 'Show examples';
+
+        const btn_wrapper = document.createElement('div');
+        btn_wrapper.appendChild(button);
+        btn_wrapper.className = Tooltip.class_name.example.button.wrapper;
+
+        return btn_wrapper;
+    }
+
+    examples.forEach(node => {
+        const { parent, anchor } = node;
+
+        if (!parent) {
+            return;
+        }
+
+        const wrapper = createWrapper(Tooltip.class_name.example.wrapper);
+        const button = createButton(wrapper);
+
+        // wrap and remove from parent
+        const example = this.wrap(Tooltip.class_name.example.example, node.element, false);
+
+        wrapper.appendChild(button);
+        wrapper.appendChild(example);
+
+        if (anchor) {
+            // insert after anchor
+            parent.insertBefore(wrapper, anchor.nextSibling);
+        }
+        else {
+            parent.appendChild(wrapper);
+        }
+    });
 }
 
 Tooltip.prototype.setPosition = function (position) {
@@ -201,17 +320,26 @@ Tooltip.prototype.setNode = function (class_name, nodes) {
 }
 
 Tooltip.prototype.wrapNode = function (class_name, nodes) {
-    // save parent and anchor
-    const parent = nodes[0].parentNode;
-    //const anchor = nodes[nodes.length - 1].nextSibling;
-    const anchor = nodes[0].previousSibling;
+    if (!nodes || !nodes.hasOwnProperty('length') || !nodes.length) {
+        return;
+    }
 
-    // wrap and remove from parent
-    const div = this.wrap(class_name, nodes, false);
-    // insert after anchor
-    parent.insertBefore(div, anchor.nextSibling);
+    nodes.forEach(node => {
+        const { parent, anchor } = node;
+        if (!parent) {
+            return;
+        }
+        // wrap and remove from parent
+        const div = this.wrap(class_name, node.element, false);
+        if (anchor) {
+            // insert after anchor
+            parent.insertBefore(div, anchor.nextSibling);
+        }
+        else {
+            parent.appendChild(div);
+        }
+    });
 }
-
 
 Tooltip.prototype.initHeader = function () {
     const name = Tooltip.class_name.header;
@@ -264,22 +392,3 @@ Tooltip.prototype.isInside = function (selection) {
     return (this.wrapper && this.wrapper === selection);
 }
 
-Tooltip.prototype.addOtherDefinition = function (defs) {
-    const getPosNode = (def) => {
-        let result = document.createElement("span");
-        result.className = "pos tooltip-button";
-        result.innerHTML = `\n${def.class}\n`;
-        result.addEventListener("click", () => {
-            this.deleteFromDOM();
-            this.content_manager.handleRequest(def.path);
-        });
-        return result;
-    }
-
-    if (!defs || defs.length == 0 || !defs[0].anchor) {
-        return;
-    }
-    defs.forEach(element => {
-        element.anchor.appendChild(getPosNode(element));
-    });
-}
