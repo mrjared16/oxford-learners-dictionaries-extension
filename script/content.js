@@ -1,16 +1,14 @@
-function Content(word, content, pronunciation, stt, defs) {
-    if (!word || !content)
-    {
-        console.log("cannot scrape word nor content");
-        //return;
+function Content(status, word, content, pronunciation, type, example) {
+    if (!word || !content) {
+        console.log("Cannot scrape word nor content");
     }
     return {
-        id: 0,
         word: word,
         content: content,
-        pronunciation: pronunciation,
-        other: defs,
-        status: (stt) ? stt : "error",
+        pronunciation: (pronunciation) ? pronunciation : null,
+        other: (type) ? type : null,
+        example: (example) ? example : null,
+        status: (status) ? status : "error"
     };
 }
 
@@ -23,7 +21,7 @@ Content.templateError = function (header, msg) {
     content.className = Tooltip.class_name.error.content;
     content.innerHTML = `${msg}`;
 
-    return Content([word], [content], null, "error", null);
+    return Content("error", [word], [content]);
 }
 
 Content.networdError = function (word) {
@@ -35,15 +33,14 @@ Content.notFound = function (word) {
 }
 
 Content.outDate = function () {
-    return Content.templateError(`Oops!`, `Oxford Learner's Dictionaries have changed their website. </br>Please report this bug and how to reproduce it. Thanks!`);
+    return Content.templateError(`Oops!`, `Oxford Learner's Dictionaries result for this word looks strange.</br>Please report this (the word and site) and how to reproduce it. Thanks!`);
 }
 
-Content.fetchError = function(error) {
-    return Content.templateError(`Extension error`, `This website has security policy problem with extension. Please report this bug (the word and site) and how to reproduce it to me. Thanks!`)
-    //return Content.templateError(`Extension error`, `${error}`);
+Content.fetchError = function (error) {
+    return Content.templateError(`Extension error`, `This website has security policy problem with extension. Please report this (the word and site) and how to reproduce it. Thanks!`)
 }
 
-Content.reconstructTooltip = function(word, content, pronun, defs)
-{
-    return Content(word, content, pronun, (pronun.length > 0) ? "success" : "default", defs);
+Content.reconstructTooltip = function (word, content, pronunciation, type, example) {
+    const status = (pronun.length && pronun.length > 0) ? "success" : "default";
+    return Content(status, word, content, pronunciation, type, example);
 }

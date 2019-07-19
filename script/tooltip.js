@@ -103,13 +103,17 @@ Tooltip.prototype.initHTML = function () {
 
 
 Tooltip.prototype.setTooltip = function (word_info) {
+    //console.log(word_info);
+
     if (word_info.status === "success") {
         // wrap pronun
         if (word_info.pronunciation) {
             this.wrapNode(Tooltip.class_name.pronunciation, word_info.pronunciation);
         }
         // wrap examples
-
+        if (word_info.example) {
+            this.wrapExample("tooltip-example", word_info.example);
+        }
         //add other results
         if (word_info.other) {
             this.addOtherDefinition(word_info.other);
@@ -201,15 +205,22 @@ Tooltip.prototype.setNode = function (class_name, nodes) {
 }
 
 Tooltip.prototype.wrapNode = function (class_name, nodes) {
-    // save parent and anchor
-    const parent = nodes[0].parentNode;
-    //const anchor = nodes[nodes.length - 1].nextSibling;
-    const anchor = nodes[0].previousSibling;
+    if (!nodes || !nodes.length) {
+        return;
+    }
 
-    // wrap and remove from parent
-    const div = this.wrap(class_name, nodes, false);
-    // insert after anchor
-    parent.insertBefore(div, anchor.nextSibling);
+    nodes.forEach(node => {
+        const { parent, anchor } = node;
+        if (!parent || !anchor) {
+            //console.log("wrap error!");
+            return;
+        }
+        // wrap and remove from parent
+        const div = this.wrap(class_name, node.element, false);
+
+        // insert after anchor
+        parent.insertBefore(div, anchor.nextSibling);
+    });
 }
 
 
@@ -265,14 +276,22 @@ Tooltip.prototype.isInside = function (selection) {
 }
 
 Tooltip.prototype.addOtherDefinition = function (defs) {
-    const getPosNode = (def) => {
-        let result = document.createElement("span");
-        result.className = "pos tooltip-button";
-        result.innerHTML = `\n${def.class}\n`;
-        result.addEventListener("click", () => {
+    const getButton = (def) => {
+        const button = document.createElement('button');
+
+        button.className = 'class-button';
+        button.innerHTML = `${def.class}`;
+
+        button.addEventListener("click", () => {
             this.deleteFromDOM();
             this.content_manager.handleRequest(def.path);
         });
+        return button;
+    }
+    const getPosNode = (def) => {
+        let result = document.createElement("span");
+        result.className = "pos";
+        result.appendChild(getButton(def));
         return result;
     }
 
@@ -281,5 +300,59 @@ Tooltip.prototype.addOtherDefinition = function (defs) {
     }
     defs.forEach(element => {
         element.anchor.appendChild(getPosNode(element));
+    });
+}
+
+Tooltip.prototype.wrapExample = function (class_name, nodes) {
+    if (!nodes || !nodes.length) {
+        return;
+    }
+
+    const buttonListener = parent => {
+        const button = parent.childNodes[0].childNodes[0];
+        button.classList.toggle('active');
+        const dropdown = parent.childNodes[1];
+        dropdown.classList.toggle('active');
+
+        button.innerHTML = (button.classList.contains('active')) ? 'Hide examples' : 'Show examples';
+    }
+
+    const createWrapper = (class_name) => {
+        const div = document.createElement('div');
+        div.className = class_name;
+
+        return div;
+    }
+
+    const createButton = (parent) => {
+        const button = document.createElement('button');
+        button.addEventListener('click', () => buttonListener(parent));
+        button.className = 'example-button';
+        button.innerHTML = 'Show examples';
+
+        const btn_wrapper = document.createElement('div');
+        btn_wrapper.appendChild(button);
+        btn_wrapper.className = 'button-wrapper';
+
+        return btn_wrapper;
+    }
+
+    nodes.forEach(node => {
+        const { parent, anchor } = node;
+
+        if (!parent || !anchor) {
+            //console.log("wrap error!");            return;
+        }
+
+        const wrapper = createWrapper(class_name);
+        const button = createButton(wrapper);
+
+        // wrap and remove from parent
+        const example = this.wrap("example-wrapper", node.element, false);
+
+        wrapper.appendChild(button);
+        wrapper.appendChild(example);
+
+        parent.insertBefore(wrapper, anchor.nextSibling);
     });
 }

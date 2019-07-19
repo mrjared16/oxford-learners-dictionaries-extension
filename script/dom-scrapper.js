@@ -24,21 +24,29 @@ DOMScrapper.prototype.getResponseForTooltip = function () {
     const word_info = Array.from(main_content.childNodes);
     const pronun = Array.from(this.getPronunciation());
 
-    while (pronun && pronun.length > 0 && pronun[pronun.length - 1].parentNode != pronun[0].parentNode) {
+    while (pronun.length && pronun.length > 0 && pronun[pronun.length - 1].parentNode != pronun[0].parentNode) {
         pronun.pop();
     }
 
     if (this.isResponseError(word_info)) {
         return Content.outDate();
     }
+    const template = (element, parent, anchor) => ({
+        element,
+        parent,
+        anchor
+    })
 
+    const pronunciation = (pronun.length && pronun.length !== 0) ? [template(pronun, pronun[0].parentNode, pronun[0].previousSibling)]: null;
     const defs = Array.from(this.getOtherDefinition());
     let def_object = null;
     if (defs.length > 0) {
         def_object = this.getOtherDefinitonObject(defs);
     }
 
-    return Content.reconstructTooltip([word_info[0]], word_info.slice(1), pronun, def_object);
+    const example = this.getExamples();
+
+    return Content.reconstructTooltip([word_info[0]], word_info.slice(1), pronunciation, def_object, example);
 }
 
 DOMScrapper.prototype.isResponseError = function (word_info) {
@@ -95,6 +103,41 @@ DOMScrapper.prototype.getOtherDefinitonObject = function (defs) {
     let result = [];
     defs.forEach(def => {
         result.push(templateObject(getClass(def), getWordPath(def)));
+    });
+    return result;
+}
+
+DOMScrapper.prototype.getExamples = function () {
+    const templateExample = (element, parent, anchor) => ({
+        element,
+        parent,
+        anchor
+    })
+    const getParent = element => element[0].parentNode;
+    const getAnchor = element => element[0].previousSibling;
+    const getExample = element => {
+        const example = [];
+        while (element.nextElementSibling)
+        {
+            element = element.nextElementSibling;
+            example.push(element);
+        }
+        return example;
+    }
+    const result = [];
+
+    let definitions = this.html.querySelectorAll('.def');
+    // each definition may be have example
+    definitions.forEach(index => {
+        const example = getExample(index);
+        if (example.length === 0) {
+            return;
+        }
+        const parent = getParent(example);
+        const anchor = getAnchor(example);
+        // add to result
+        result.push(templateExample(example, parent, anchor));
+
     });
     return result;
 }
