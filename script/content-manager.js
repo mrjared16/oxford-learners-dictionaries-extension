@@ -28,9 +28,13 @@ ContentManager.prototype._onMouseUp = function (event) {
         return;
 
     this.rect = this.selection.getRangeAt(0).getBoundingClientRect();
+    this.createTooltip(this.word);
+}
 
+ContentManager.prototype.createTooltip = function(word)
+{
     this.initTooltip();
-    this._fetch(this.word);
+    this._fetch(word);
 }
 
 // not render if selection is inside tooltip or not a word
@@ -85,7 +89,7 @@ ContentManager.prototype._fetch = function (word) {
                 tryAgain();
             }
             else {
-                this.renderToolTip(Content.fetchError());
+                this.renderTooltip(Content.fetchError());
             }
         });
 }
@@ -112,7 +116,7 @@ ContentManager.prototype.handleResponse = function (response) {
 
 }
 
-ContentManager.prototype.renderToolTip = function (data) {
+ContentManager.prototype.renderTooltip = function (data) {
     this.tooltip.renderTooltip(data, this.rect);
 }
 
