@@ -25,6 +25,11 @@ DOMScrapper.prototype.getResponseForTooltip = function () {
     if (this.isResponseError(word_info)) {
         return Content.outDate();
     }
+    const template = (element, parent, anchor) => ({
+        element,
+        parent,
+        anchor
+    })
 
     const word = this.getWord(word_info);
     const content = this.getContent(word_info);

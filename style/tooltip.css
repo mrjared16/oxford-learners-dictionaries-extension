@@ -28,7 +28,7 @@ header
 .__tooltip-header-container {
     display:block;
 }
-
+/*
 .__tooltip-header-bar {
 
 }
@@ -41,6 +41,7 @@ header
 .__tooltip-header-last {
 
 }
+*/
 
 ::-webkit-scrollbar-track
 {
@@ -193,8 +194,10 @@ div.__tooltip-content-container >.res-g{
 }
 
 /* button */
+/*
 .button-wrapper {
 }
+*/
 
 .example-button {
     border: 2px solid #dbdee2;
