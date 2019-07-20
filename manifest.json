@@ -1,6 +1,12 @@
 {
     "name": "Oxford Learner's Dictionaries Extension",
     "description": "Fast way to look up a word by popup a tooltip",
+    "background": {
+        "persistent": false,
+        "scripts": [
+            "script/background.js"
+        ]
+    },
     "manifest_version": 2,
     "version": "0.1",
     "content_scripts": [
@@ -21,6 +27,7 @@
     ],
     "content_security_policy": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline';  connect-src https://www.oxfordlearnersdictionaries.com/;",
     "web_accessible_resources": [
-        "style/*.css"
+        "style/*.css",
+        "img/*"
     ]
 }
