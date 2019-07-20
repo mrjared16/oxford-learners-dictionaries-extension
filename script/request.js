@@ -4,11 +4,28 @@ function Request(word) {
     return this;
 }
 
-Request.prototype.sendRequest = function () {
-    return window.fetch(this.url);
+Request.fetch = function (input, init) {
+    return new Promise((resolve, reject) => {
+        chrome.runtime.sendMessage({ input, init }, messageResponse => {
+            const [response, error] = messageResponse;
+            if (response === null) {
+                reject(error);
+            } else {
+                // Use undefined on a 204 - No Content
+                const body = response.body ? new Blob([response.body]) : undefined;
+                resolve(new Response(body, {
+                    status: response.status,
+                    statusText: response.statusText,
+                }));
+            }
+        });
+    });
 }
-Request.prototype.getEncodeWord = function(word)
-{
+
+Request.prototype.sendRequest = function () {
+    return Request.fetch(this.url);
+}
+Request.prototype.getEncodeWord = function (word) {
     return word.replace(" ", "-");
 }
 
