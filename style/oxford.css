@@ -121,7 +121,7 @@ classes
 }
 
 :not(.ocoll) .top-container .collapse .heading:before{
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/wordlist/icon-plus-minus.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-plus-minus.png");
 }
 
 :not(.ocoll) .top-container .collapse .heading:hover,
@@ -170,7 +170,7 @@ span[hide~="y"], .top-container br{
     text-decoration:none;
 }
 .oxford3000{
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/wordlist/icon-ox3000.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-ox3000.png");
 }
 
 
@@ -180,7 +180,7 @@ span[hide~="y"], .top-container br{
     font-size:14px;
 }
 .top-g .pron-uk, .ei-g .pron-uk{
-    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-bre.png);
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-audio-bre.png");
     background-repeat:no-repeat;
     background-position:left top!important;
     background-size:100%;
@@ -188,13 +188,13 @@ span[hide~="y"], .top-container br{
     height:24px;
 }
 .top-g .pron-uk:hover, .ei-g .pron-uk:hover{
-    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-bre.png);
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-audio-bre.png");
     background-repeat:no-repeat;
     background-position:left bottom!important;
 }
 
 .top-g .pron-us, .ei-g .pron-us{
-    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-name.png);
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-audio-name.png");
     background-repeat:no-repeat;
     background-position:left top!important;
     background-size:100%;
@@ -202,7 +202,7 @@ span[hide~="y"], .top-container br{
     height:24px;
 }
 .top-g .pron-us:hover, .ei-g .pron-us:hover{
-    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/documents/icon-audio-name.png);
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-audio-name.png");
     background-repeat:no-repeat;
     background-position:left bottom!important;
 }
@@ -341,7 +341,7 @@ li.sn-g:before{
     height:24px;
     bottom:0;
     right:0;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/enlarge-img.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/enlarge-img.png");
     background-color:inherit;background-repeat:no-repeat;background-position:center;background-size:14px 14px
 }
 #ox-enlarge+.z{
@@ -399,7 +399,7 @@ li.sn-g:before{
     position:absolute;
     width:6px;
     height:6px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-bullet.png");
     background-size:6px auto;
 }
 .x-gs{
@@ -433,7 +433,7 @@ li.sn-g:before{
     top:-1px;
     width:13px;
     height:9px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-arrow.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-arrow.png");
     background-size:13px auto;
     display:inline-block;
 }
@@ -471,7 +471,7 @@ li.sn-g:before{
     top:9px;
     width:7px;
     height:7px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-sqbullet.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-sqbullet.png");
     background-size:7px auto
 }
 .collapse{
@@ -488,7 +488,7 @@ li.sn-g:before{
 .collapse .heading:before{
     width:14px;
     height:14px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/icon-plus-minus-orange.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-plus-minus-orange.png");
     background-size:100% auto;
     background-position:center bottom;
     content:"";
@@ -541,7 +541,7 @@ li.sn-g:before{
     top:-2px;
     width:6px;
     height:6px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-bullet.png");
     background-size:6px auto
 }
 
@@ -572,7 +572,7 @@ li.sn-g:before{
     top:-2px;
     width:6px;
     height:6px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-bullet.png");
     background-size:6px auto;
     display:inline-block;
 }
@@ -603,7 +603,7 @@ li.sn-g:before{
     top:9px;
     width:7px;
     height:7px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-sqbullet.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-sqbullet.png");
     background-size:7px auto
 }
 .collapse .table{
@@ -634,7 +634,7 @@ li.sn-g:before{
     width:6px;
     height:6px;
     top:8px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-bullet.png");
     background-size:6px auto
 }
 .collapse[title^="Wordfinder"] .xr-gs:before{
@@ -680,7 +680,7 @@ li.sn-g:before{
     background-color:rgba(169,34,45,0.2);
 }
 .snippet .collapse .heading:before{
-    background-image:url(https://www.oxfordlearnersdictionaries.com/external/images/entry/icon-plus-minus-red.png);
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/icon-plus-minus-red.png");
 }
 .snippet .collapse .shcut.shcut{
     margin-top:12px;
@@ -732,7 +732,7 @@ li.sn-g:before{
     top:-2px;
     width:6px;
     height:6px;
-    background-image:url("https://www.oxfordlearnersdictionaries.com/external/images/entry/entry-bullet.png");
+    background-image:url("chrome-extension://__MSG_@@extension_id__/img/entry-bullet.png");
     background-size:6px auto
 }
 .unbox.is-active .heading{
