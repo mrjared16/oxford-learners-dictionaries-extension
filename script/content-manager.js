@@ -27,16 +27,21 @@ ContentManager.prototype._onMouseUp = function (event) {
     if (!this.shouldRenderTooltip(event.target))
         return;
 
-    this.rect = this.selection.getRangeAt(0).getBoundingClientRect();
+    this.rect = (this.isSelectionWithinInput(event)) ? 
+        event.target.getBoundingClientRect() : 
+        this.selection.getRangeAt(0).getBoundingClientRect();
+
     this.createTooltip(this.word);
 }
 
-ContentManager.prototype.createTooltip = function(word)
-{
+ContentManager.prototype.createTooltip = function (word) {
     this.initTooltip();
     this._fetch(word);
 }
 
+ContentManager.prototype.isSelectionWithinInput = function(event) {
+    return ["textarea", "input"].includes(event.target.tagName.toLowerCase());
+}
 // not render if selection is inside tooltip or not a word
 ContentManager.prototype.shouldRenderTooltip = function (event) {
     if (this.tooltip.isInside(event)) {
@@ -81,16 +86,7 @@ ContentManager.prototype._fetch = function (word) {
                 this.handleResponse(res);
         })
         .catch(error => {
-            // workaround: word direct to word_1
-            const isFirstTime = () => word.indexOf("_") == -1;
-            const tryAgain = () => this._fetch(word + '_1');
-
-            if (isFirstTime()) {
-                tryAgain();
-            }
-            else {
-                this.renderTooltip(Content.fetchError());
-            }
+            this.renderTooltip(Content.fetchError());
         });
 }
 
