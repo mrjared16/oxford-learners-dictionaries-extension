@@ -78,14 +78,16 @@ function supportAudioFlash() {
 
 function playHtml5(src_mp3, src_ogg) {
     //use appropriate source
-    var audio = new Audio("");
+    let audio = new Audio("");
     if (audio.canPlayType("audio/mpeg") != "no" && audio.canPlayType("audio/mpeg") != "")
         audio = new Audio(src_mp3);
     else if (audio.canPlayType("audio/ogg") != "no" && audio.canPlayType("audio/ogg") != "")
         audio = new Audio(src_ogg);
 
     //play
-    audio.addEventListener("error", function (e) { alert("Apologies, the sound is not available."); });
+    audio.addEventListener("error", function (e) {
+        alert("Apologies, the sound is not available or cannot be played on this site.");
+    });
     audio.play();
 }
 
@@ -101,4 +103,3 @@ function playFlash(src_mp3, src_ogg) {
 function playRaw(src_mp3, src_ogg) {
     window.open(src_mp3, "Sound", "menubar=no, status=no, scrollbars=no, menubar=no, width=200, height=100");
 }
-
