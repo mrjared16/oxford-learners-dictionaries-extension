@@ -27,8 +27,8 @@ ContentManager.prototype._onMouseUp = function (event) {
     if (!this.shouldRenderTooltip(event.target))
         return;
 
-    this.rect = (this.isSelectionWithinInput(event)) ? 
-        event.target.getBoundingClientRect() : 
+    this.rect = (this.isSelectionWithinInput(event)) ?
+        event.target.getBoundingClientRect() :
         this.selection.getRangeAt(0).getBoundingClientRect();
 
     this.createTooltip(this.word);
@@ -39,7 +39,7 @@ ContentManager.prototype.createTooltip = function (word) {
     this._fetch(word);
 }
 
-ContentManager.prototype.isSelectionWithinInput = function(event) {
+ContentManager.prototype.isSelectionWithinInput = function (event) {
     return ["textarea", "input"].includes(event.target.tagName.toLowerCase());
 }
 // not render if selection is inside tooltip or not a word
@@ -86,30 +86,22 @@ ContentManager.prototype._fetch = function (word) {
                 this.handleResponse(res);
         })
         .catch(error => {
-            this.renderTooltip(Content.fetchError());
+            // handle 404 or netword error, 
+            let errorMsg;
+            if (error === 404) {
+                errorMsg = Content.notFound(this.word);
+            }
+            else {
+                errorMsg = Content.networdError(this.word);
+            }
+            this.renderTooltip(errorMsg);
         });
 }
 
-// handle 404 or netword error, scrape if success
-ContentManager.prototype.handleResponse = function (response) {
-
-    let word_info;
-    if (response.status === 404) {
-        word_info = Content.notFound(this.word);
-    }
-    else if (!response || response.status != 200) {
-        word_info = Content.networdError(this.word);
-    }
-    if (word_info) {
-        this.renderTooltip(word_info);
-        return;
-    }
-
-    response.text()
-        .then(res => new DOMScrapper(res))
-        .then(scrapper => scrapper.getResponseForTooltip())
-        .then(info => this.renderTooltip(info));
-
+//scrape if success
+ContentManager.prototype.handleResponse = async function(response) {
+    const scrapper = await new DOMScrapper(response);
+    await this.renderTooltip(await scrapper.getResponseForTooltip());
 }
 
 ContentManager.prototype.renderTooltip = function (data) {
