@@ -3,6 +3,7 @@ function DOMScrapper(response) {
 
     this.html = parser.parseFromString(response, "text/html");
     this.addListenerToDOM();
+    // console.log(this.html);
     return this;
 }
 
@@ -19,24 +20,25 @@ DOMScrapper.prototype.addListenerToDOM = function () {
 DOMScrapper.prototype.getResponseForTooltip = function () {
     const main_content = this.scrapeMainContent();
     if (!main_content)
-        return Content.outDate();
-
+    return Content.outDate();
+    
     const word_info = Array.from(main_content.childNodes);
     if (this.isResponseError(word_info)) {
         return Content.outDate();
     }
+    
     const template = (element, parent, anchor) => ({
         element,
         parent,
         anchor
     })
-
+    
     const word = this.getWord(word_info);
     const content = this.getContent(word_info);
     const pronunciation = this.getPronunciation();
     const type = this.getWordType();
     const example = this.getExamples();
-
+    
     return Content.reconstructTooltip(word, content, pronunciation, type, example);
 }
 
@@ -57,7 +59,7 @@ DOMScrapper.prototype.scrapeCollapseButtons = function () {
 }
 
 DOMScrapper.prototype.scrapeMainContent = function () {
-    return this.html.querySelector("div.entry > .h-g");
+    return this.html.querySelector("div.entry");
 }
 
 DOMScrapper.prototype.getWord = function (word) {
