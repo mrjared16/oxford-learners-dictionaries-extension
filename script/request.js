@@ -1,22 +1,25 @@
 function Request(word) {
-    this.query = this.getEncodeWord(word);
-    this.url = `https://www.oxfordlearnersdictionaries.com/definition/english/${this.query}`;
+    this.query = word;
+    this.url = `https://www.oxfordlearnersdictionaries.com/search/english/?q=${this.query}`;
     return this;
 }
 
-Request.fetch = function (input, init) {
+// send to background script do the fetch, get the HTML text
+Request.fetch = function (url) {
     return new Promise((resolve, reject) => {
-        chrome.runtime.sendMessage({ input, init }, messageResponse => {
-            const [response, error] = messageResponse;
-            if (response === null) {
-                reject(error);
+        chrome.runtime.sendMessage({ url }, (messageResponse) => {
+            if (chrome.runtime.lastError) {
+                // An error occurred :(
+                console.log("ERROR: ", chrome.runtime.lastError);
             } else {
-                // Use undefined on a 204 - No Content
-                const body = response.body ? new Blob([response.body]) : undefined;
-                resolve(new Response(body, {
-                    status: response.status,
-                    statusText: response.statusText,
-                }));
+                if (!messageResponse)
+                    reject('500');
+
+                const { response, error } = messageResponse;
+                if (error)
+                    reject(response);
+                else
+                    resolve(response);
             }
         });
     });
@@ -25,7 +28,5 @@ Request.fetch = function (input, init) {
 Request.prototype.sendRequest = function () {
     return Request.fetch(this.url);
 }
-Request.prototype.getEncodeWord = function (word) {
-    return word.replace(" ", "-");
-}
+
 
